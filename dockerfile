@@ -1,13 +1,20 @@
-#Choisir une image de base légère avec python
+# 1️⃣ Utiliser une image Python légère
 FROM python:3.13-slim
 
-#Définir le répertoire de travail dans le conteneur
+# 2️⃣ Définir le répertoire de travail
 WORKDIR /app
 
-#Copier le contenu du projet local dans le conteneur
-COPY . /app
+# 3️⃣ Copier uniquement les dépendances d'abord pour optimiser le cache
+COPY requirements.txt .
 
-#Installer les dépendances du projet
+# 4️⃣ Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["Python", "main.py"]
+# 5️⃣ Copier tout le reste du projet dans l'image
+COPY . .
+
+# 6️⃣ Vérifier que les fichiers sont bien copiés
+RUN ls -R /app/data || echo "⚠️ Dossier data manquant"
+
+# 7️⃣ Définir la commande par défaut
+CMD ["python", "main.py"]

@@ -17,8 +17,10 @@ api_key = "2feaaf26759da77632157d11acb8edb345ebd759094abfdad3679bdee1d26a484866b
 # 2️⃣ Définir les fichiers et paramètres
 # -------------------------------------------------
 # Fichiers locaux
-csv_file = r"C:\Users\HP\Desktop\Python\Cyber ETL\cyber-etl\data\raw\logs_auth.csv"
-json_file = r"C:\Users\HP\Desktop\Python\Cyber ETL\cyber-etl\data\raw\malware.json"
+#csv_file = r"data\raw\logs_auth.csv"
+#json_file = r"data\raw\malware.json"
+csv_file = os.path.join("data", "raw", "logs_auth.csv").replace("\\", "/")
+json_file = os.path.join("data", "raw", "malware.json").replace("\\", "/")
 
 # API AbuseIPDB
 api_url = "https://api.abuseipdb.com/api/v2/check?ipAddress=8.8.8.8"
@@ -52,7 +54,8 @@ except Exception as e:
 
 # d) Base de données
 
-connection_string = "sqlite:///data/raw/incidents.db"
+db_path = os.path.join("data", "raw", "incidents.db").replace("\\", "/")
+connection_string = f"sqlite:///{db_path.replace(os.sep, '/')}"
 query = "SELECT * FROM network_incidents WHERE status = 'login_attempt';"   
 try:
     df_db = extract_db(connection_string, query)
@@ -106,7 +109,7 @@ load_csv(df_final, output_file)
 import pandas as pd
 
 # Chemin du fichier exporté
-csv_file = "data/processed/final_logs.csv"
+csv_file = os.path.join("data", "processed", "final_logs.csv")
 
 # Charger le CSV
 df = pd.read_csv(csv_file)
