@@ -30,6 +30,7 @@ cyber-etl/
 │
 ├── create_tes_db.py      # génération d'une base SQLite d'exemple
 ├── main.py               # exécution complète du pipeline
+├── .env.example          # exemple de configuration locale
 ├── requirements.txt      # dépendances Python
 └── README.md
 ```
@@ -73,7 +74,8 @@ Le script `main.py` utilise une clé d’API définie dans le code. Pour un usag
    ```env
    ABUSEIPDB_API_KEY=your_api_key_here
    ```
-3. Utilisez cette variable dans `etl/config.py` ou `main.py` (bonne pratique).
+3. Vous pouvez partir du modèle `.env.example` fourni à la racine.
+4. Utilisez cette variable dans `etl/config.py` ou `main.py` (bonne pratique).
 
 ## Exemple de flux de travail
 ```bash
